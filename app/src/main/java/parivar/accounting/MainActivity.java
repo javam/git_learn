@@ -1,6 +1,5 @@
 package parivar.accounting;
 
-
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
@@ -19,7 +18,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,6 +38,8 @@ public class MainActivity extends Activity implements OnClickListener {
     Spinner spinner;
 
     DB db;
+
+    String[] dataSpinner;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,49 +69,51 @@ public class MainActivity extends Activity implements OnClickListener {
 
         linLayout = (LinearLayout) findViewById(R.id.linLayout);
 
-        // create object of class db
         db = new DB(this);
         db.open();
 
-
         readValues();
 
+        makeSpinner();
+    }
 
-//        ---------------------------
+    private void makeSpinner() {
 
-        String[] dataSpinner = {"","food", "transport", "fun"};
-        // адаптер
+        // localisation
+        dataSpinner = new String[6];
+        dataSpinner[0] = getString(R.string.categoty_food);
+        dataSpinner[1] = getString(R.string.categoty_flat);
+        dataSpinner[2] = getString(R.string.categoty_transport);
+        dataSpinner[3] = getString(R.string.categoty_fun);
+        dataSpinner[4] = getString(R.string.categoty_clothes);
+        dataSpinner[5] = getString(R.string.categoty_whithout);
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dataSpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
         // заголовок
-        spinner.setPrompt("Категория");
+        spinner.setPrompt(getString(R.string.v_category));
         // выделяем элемент
-        spinner.setSelection(0);
+        spinner.setSelection(5);
         // устанавливаем обработчик нажатия
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
-                // показываем позиция нажатого элемента
-                Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
-                    case 0: category = "без категории"; break;
-                    case 1: category = "food"; break;
-                    case 2: category = "transport"; break;
-                    case 3: category = "fun"; break;
+                    case 0: category = dataSpinner[0]; break;
+                    case 1: category = dataSpinner[1]; break;
+                    case 2: category = dataSpinner[2]; break;
+                    case 3: category = dataSpinner[3]; break;
+                    case 4: category = dataSpinner[4]; break;
+                    case 5: category = dataSpinner[5]; break;
                 }
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
             }
         });
-
     }
-
-//TODO Create listview of table
-
 
     @Override
     public void onClick(View v) {
@@ -206,7 +208,7 @@ public class MainActivity extends Activity implements OnClickListener {
         int sum = db.getSum(cursor1) - db.getSum(cursor2);
 
         tvSum.setText("" + sum);
-
+//TODO понять в каком месте правильно будет закрывать подключение
 //        db.close();
     }
 

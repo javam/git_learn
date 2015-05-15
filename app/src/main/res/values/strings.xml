@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">"Accounting "</string>
     <string name="v_money">"Деньги: "</string>
+    <string name="v_category">"Категория"</string>
+    <string name="v_add">"Доход: "</string>
+    <string name="v_sub">"Расход: "</string>
+    <string name="categoty_food">"Еда"</string>
+    <string name="categoty_flat">"За квартиру"</string>
+    <string name="categoty_transport">"Транспорт"</string>
+    <string name="categoty_fun">"Развлечения"</string>
+    <string name="categoty_clothes">"Одежда"</string>
+    <string name="categoty_whithout">"без категории"</string>
     <string name="action_settings">Settings</string>
 </resources>
