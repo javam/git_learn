@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">"Accounting "</string>
+    <string name="v_money">"Деньги: "</string>
+    <string name="action_settings">Settings</string>
+</resources>
