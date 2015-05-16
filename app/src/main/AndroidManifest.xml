@@ -19,8 +19,7 @@
         </activity>
         <activity
             android:name=".InputActivity"
-            android:label=" "
-            android:windowSoftInputMode="stateHidden">
+            android:theme="@style/Theme.Transparent">
         </activity>
     </application>
 

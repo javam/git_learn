@@ -13,5 +13,7 @@
     <string name="input_add">"Добавить приход"</string>
     <string name="input_sub">"Добавить расход"</string>
     <string name="btn_input">"Добавить"</string>
+    <string name="btn_showOrHide">"Отобразить/Спрятать"</string>
+    <string name="btn_clear">"Очистить"</string>
     <string name="action_settings">Настройки</string>
 </resources>

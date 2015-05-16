@@ -48,7 +48,6 @@ public class InputActivity extends Activity implements View.OnClickListener {
         Intent intent = getIntent();
         tvHeadInput.setText(intent.getStringExtra("typeInput"));
         typeInputBool = Boolean.parseBoolean(intent.getStringExtra("typeInputBool"));
-        Log.v(LOG_TAG,intent.getStringExtra("typeInputBool"));
         makeSpinner();
     }
 

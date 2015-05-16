@@ -20,11 +20,11 @@ public class MainActivity extends Activity implements OnClickListener {
     final int COLOR_RED = Color.parseColor("#559966CC");
     final String LOG_TAG = "myLogs";
 
-    int money;
-
-    Button btnAdd, btnSub, btnShow, btnHide, btnClear;
+    Button btnAdd, btnSub, btnShow, btnClear;
     TextView tvSum;
     LinearLayout linLayout;
+
+    boolean flagHide;
 
     DB db;
 
@@ -42,9 +42,6 @@ public class MainActivity extends Activity implements OnClickListener {
         btnShow = (Button) findViewById(R.id.btnShow);
         btnShow.setOnClickListener(this);
 
-        btnHide = (Button) findViewById(R.id.btnHide);
-        btnHide.setOnClickListener(this);
-
         btnClear = (Button) findViewById(R.id.btnClear);
         btnClear.setOnClickListener(this);
 
@@ -54,6 +51,8 @@ public class MainActivity extends Activity implements OnClickListener {
 
         db = new DB(this);
         db.open();
+
+        tvSum.setText(getBalance());
 
         readValues();
     }
@@ -67,7 +66,6 @@ public class MainActivity extends Activity implements OnClickListener {
 
     @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
             case R.id.btnAdd:
             Intent intentAdd = new Intent(this, InputActivity.class);
@@ -82,18 +80,17 @@ public class MainActivity extends Activity implements OnClickListener {
                 startActivity(intentSub);
                 break;
             case R.id.btnClear:
-                Log.d(LOG_TAG, "--- Clear mytable: ---");
-                // удаляем все записи
-                int clearCount = db.delAllRec();
+                db.delAllRec();
                 readValues();
                 break;
             case R.id.btnShow:
-                Log.d(LOG_TAG, "--- Show mytable: ---");
-                readValues();
-                break;
-            case R.id.btnHide:
-                Log.d(LOG_TAG, "--- Hide mytable: ---");
-                linLayout.removeAllViews();
+                if(!flagHide){
+                    readValues();
+                }
+                else {
+                    linLayout.removeAllViews();
+                    flagHide = false;
+                }
                 break;
         }
     }
@@ -104,12 +101,7 @@ public class MainActivity extends Activity implements OnClickListener {
         // делаем запрос всех данных из таблицы mytable, получаем Cursor
         Cursor c = db.getAllData();
 
-        // ставим позицию курсора на первую строку выборки
-        // если в выборке нет строк, вернется false
         if (c.moveToFirst()) {
-
-            // определяем номера столбцов по имени в выборке
-            int idColIndex = c.getColumnIndex(db.COLUMN_ID);
             int dateColIndex = c.getColumnIndex(db.COLUMN_DATA);
             int addColIndex = c.getColumnIndex(db.COLUMN_ADD);
             int subColIndex = c.getColumnIndex(db.COLUMN_SUB);
@@ -139,15 +131,18 @@ public class MainActivity extends Activity implements OnClickListener {
             Log.d(LOG_TAG, "0 rows");
         c.close();
 
+//TODO понять в каком месте правильно будет закрывать подключение
+//        db.close();
+        tvSum.setText(getBalance());
+        flagHide = true;
+    }
+
+    public String getBalance() {
         String sqlQuerySum1 = "SELECT SUM(_add) FROM mytable5";
         String sqlQuerySum2 = "SELECT SUM(_sub) FROM mytable5";
         Cursor cursor1 = db.getSelect(sqlQuerySum1);
         Cursor cursor2 = db.getSelect(sqlQuerySum2);
-        int sum = db.getSum(cursor1) - db.getSum(cursor2);
-
-        tvSum.setText("" + sum);
-//TODO понять в каком месте правильно будет закрывать подключение
-//        db.close();
+        return ""+(db.getSum(cursor1) - db.getSum(cursor2));
     }
 
 }
