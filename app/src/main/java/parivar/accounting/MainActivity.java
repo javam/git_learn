@@ -1,7 +1,7 @@
 package parivar.accounting;
 
 import android.app.Activity;
-import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,17 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class MainActivity extends Activity implements OnClickListener {
 
@@ -29,17 +21,12 @@ public class MainActivity extends Activity implements OnClickListener {
     final String LOG_TAG = "myLogs";
 
     int money;
-    String category = "";
 
     Button btnAdd, btnSub, btnShow, btnHide, btnClear;
-    EditText etMoney;
     TextView tvSum;
     LinearLayout linLayout;
-    Spinner spinner;
 
     DB db;
-
-    String[] dataSpinner;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,11 +48,7 @@ public class MainActivity extends Activity implements OnClickListener {
         btnClear = (Button) findViewById(R.id.btnClear);
         btnClear.setOnClickListener(this);
 
-        etMoney = (EditText) findViewById(R.id.etMoney);
-
         tvSum = (TextView) findViewById(R.id.sumView);
-
-        spinner = (Spinner) findViewById(R.id.spinner);
 
         linLayout = (LinearLayout) findViewById(R.id.linLayout);
 
@@ -73,75 +56,30 @@ public class MainActivity extends Activity implements OnClickListener {
         db.open();
 
         readValues();
-
-        makeSpinner();
     }
 
-    private void makeSpinner() {
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-        // localisation
-        dataSpinner = new String[6];
-        dataSpinner[0] = getString(R.string.categoty_food);
-        dataSpinner[1] = getString(R.string.categoty_flat);
-        dataSpinner[2] = getString(R.string.categoty_transport);
-        dataSpinner[3] = getString(R.string.categoty_fun);
-        dataSpinner[4] = getString(R.string.categoty_clothes);
-        dataSpinner[5] = getString(R.string.categoty_whithout);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dataSpinner);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner.setAdapter(adapter);
-        // заголовок
-        spinner.setPrompt(getString(R.string.v_category));
-        // выделяем элемент
-        spinner.setSelection(5);
-        // устанавливаем обработчик нажатия
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0: category = dataSpinner[0]; break;
-                    case 1: category = dataSpinner[1]; break;
-                    case 2: category = dataSpinner[2]; break;
-                    case 3: category = dataSpinner[3]; break;
-                    case 4: category = dataSpinner[4]; break;
-                    case 5: category = dataSpinner[5]; break;
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-            }
-        });
+        readValues();
     }
 
     @Override
     public void onClick(View v) {
 
-        // получаем данные из полей ввода
-        Date d = new Date();
-        SimpleDateFormat fromUser = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
-        String date = (fromUser.format(d)).toString();
-
-        if (etMoney.getText().toString().trim().isEmpty()) money = 0;
-        else money = Integer.parseInt(etMoney.getText().toString());
-
         switch (v.getId()) {
             case R.id.btnAdd:
-                if (money == 0) break;
-                Log.d(LOG_TAG, "--- Insert in mytable: ---");
-                db.addRec(date, money, 0, category);
-                readValues();
-                hideKeyboard();
-                spinner.setSelection(0);
+            Intent intentAdd = new Intent(this, InputActivity.class);
+            intentAdd.putExtra("typeInput", getString(R.string.input_add));
+            intentAdd.putExtra("typeInputBool", "true");
+            startActivity(intentAdd);
                 break;
             case R.id.btnSub:
-                if (money == 0) break;
-                Log.d(LOG_TAG, "--- Insert in mytable: ---");
-                db.addRec(date, 0, money, category);
-                readValues();
-                hideKeyboard();
-                spinner.setSelection(0);
+                Intent intentSub = new Intent(this, InputActivity.class);
+                intentSub.putExtra("typeInput", getString(R.string.input_sub));
+                intentSub.putExtra("typeInputBool", "false");
+                startActivity(intentSub);
                 break;
             case R.id.btnClear:
                 Log.d(LOG_TAG, "--- Clear mytable: ---");
@@ -212,8 +150,4 @@ public class MainActivity extends Activity implements OnClickListener {
 //        db.close();
     }
 
-    public void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-    }
 }

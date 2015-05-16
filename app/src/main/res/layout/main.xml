@@ -16,6 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp"
             android:text="Баланс:  "
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -28,46 +29,6 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </LinearLayout>
-
-
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:text="@string/v_money"
-            android:layout_weight="0.5"></TextView>
-
-        <EditText
-            android:id="@+id/etMoney"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:layout_weight="1"></EditText>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/v_category"
-        android:id="@+id/textView3"
-        android:layout_weight="0.5" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner"
-        android:spinnerMode="dialog"
-        android:layout_weight="1"/>
-</LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -108,6 +69,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="10dp"
         android:id="@+id/scroll">
         <LinearLayout
             android:id="@+id/linLayout"
