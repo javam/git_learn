@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 public class DB {
 
@@ -78,16 +80,64 @@ public class DB {
             int clearCount = mDB.delete(DB_TABLE, null, null);
             return clearCount;
         }
-
-    public int getSum(Cursor cursor) {
+//TODO объеденить эти два метода
+    public int getCursor(Cursor cursor) {
         int sum;
-        if(cursor.moveToFirst())
+        if (cursor.moveToFirst())
             sum = cursor.getInt(0);
         else
             sum = 0;
         cursor.close();
         return sum;
     }
+
+    public String getCursorString(Cursor cursor) {
+        String sum;
+        if(cursor.moveToFirst())
+            sum = cursor.getString(0);
+        else
+            sum = " ";
+        cursor.close();
+        return sum;
+    }
+//TODO причесать этот блок и ещё несколько снизу в один метод
+    public String getBalance() {
+        String sqlQuerySum1 = "SELECT SUM(_add) FROM mytable5";
+        String sqlQuerySum2 = "SELECT SUM(_sub) FROM mytable5";
+        Cursor cursor1 = getSelect(sqlQuerySum1);
+        Cursor cursor2 = getSelect(sqlQuerySum2);
+        return ""+(getCursor(cursor1) - getCursor(cursor2));
+    }
+
+    public String getCategoryById(String id) {
+        String sqlQuery = "SELECT category FROM mytable5 WHERE _id = "+id;
+        Cursor cursor = getSelect(sqlQuery);
+        return ""+ getCursorString(cursor);
+    }
+    public String getAddById(String id) {
+        String sqlQuery = "SELECT _add FROM mytable5 WHERE _id = "+id;
+        Cursor cursor = getSelect(sqlQuery);
+        return ""+ getCursor(cursor);
+    }
+    public String getSubById(String id) {
+        String sqlQuery = "SELECT _sub FROM mytable5 WHERE _id = "+id;
+        Cursor cursor = getSelect(sqlQuery);
+        return ""+ getCursor(cursor);
+    }
+
+    public void updateValue(String id, String moneyAdd, String moneySub, String category) {
+        String sqlQuery = "UPDATE mytable5 SET _add = " + moneyAdd
+                           + ", _sub = " + moneySub
+                           + ", category = " + category
+                           + " WHERE _id = " + id;
+        Cursor cursor = mDB.rawQuery(sqlQuery, null);
+        cursor.moveToFirst();
+        cursor.close();
+
+
+    }
+
+//TODO в запросах везде прописать переменные d sqlQuery
 
     // класс по созданию и управлению БД
     private class DBHelper extends SQLiteOpenHelper {

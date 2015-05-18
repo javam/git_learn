@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 public class MainActivity extends Activity implements OnClickListener {
 
     final int COLOR_GREEN = Color.parseColor("#55336699");
@@ -25,6 +27,7 @@ public class MainActivity extends Activity implements OnClickListener {
     LinearLayout linLayout;
 
     boolean flagHide;
+    String idItem, moneyItem, categotyItem;
 
     DB db;
 
@@ -52,8 +55,6 @@ public class MainActivity extends Activity implements OnClickListener {
         db = new DB(this);
         db.open();
 
-        tvSum.setText(getBalance());
-
         readValues();
     }
 
@@ -68,10 +69,11 @@ public class MainActivity extends Activity implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnAdd:
-            Intent intentAdd = new Intent(this, InputActivity.class);
-            intentAdd.putExtra("typeInput", getString(R.string.input_add));
-            intentAdd.putExtra("typeInputBool", "true");
-            startActivity(intentAdd);
+                //TODO delete tybyInputBool
+                Intent intentAdd = new Intent(this, InputActivity.class);
+                intentAdd.putExtra("typeInput", getString(R.string.input_add));
+                intentAdd.putExtra("typeInputBool", "true");
+                startActivity(intentAdd);
                 break;
             case R.id.btnSub:
                 Intent intentSub = new Intent(this, InputActivity.class);
@@ -84,10 +86,9 @@ public class MainActivity extends Activity implements OnClickListener {
                 readValues();
                 break;
             case R.id.btnShow:
-                if(!flagHide){
+                if (!flagHide) {
                     readValues();
-                }
-                else {
+                } else {
                     linLayout.removeAllViews();
                     flagHide = false;
                 }
@@ -100,8 +101,8 @@ public class MainActivity extends Activity implements OnClickListener {
         linLayout.removeAllViews();
         // делаем запрос всех данных из таблицы mytable, получаем Cursor
         Cursor c = db.getAllData();
-
         if (c.moveToFirst()) {
+            int dateColId = c.getColumnIndex(db.COLUMN_ID);
             int dateColIndex = c.getColumnIndex(db.COLUMN_DATA);
             int addColIndex = c.getColumnIndex(db.COLUMN_ADD);
             int subColIndex = c.getColumnIndex(db.COLUMN_SUB);
@@ -110,22 +111,43 @@ public class MainActivity extends Activity implements OnClickListener {
             LayoutInflater ltInflater = getLayoutInflater();
 
             do {
-                View item = ltInflater.inflate(R.layout.item, linLayout, false);
+                final View item = ltInflater.inflate(R.layout.item, linLayout, false);
                 TextView tvDate = (TextView) item.findViewById(R.id.tvDate);
-                tvDate.setText("Дaта: " + c.getString(dateColIndex));
+                tvDate.setText(getString(R.string.v_date) + ": " + c.getString(dateColIndex));
                 if (c.getInt(addColIndex) != 0) {
                     TextView tvMoney = (TextView) item.findViewById(R.id.tvMoney);
-                    tvMoney.setText("Доход: " + c.getInt(addColIndex));
+                    tvMoney.setText(getString(R.string.v_add)+ ": " + c.getInt(addColIndex));
                     item.setBackgroundColor(COLOR_GREEN);
+                    moneyItem = "" + c.getInt(addColIndex);
                 } else {
                     TextView tvMoney = (TextView) item.findViewById(R.id.tvMoney);
-                    tvMoney.setText("Расход: " + c.getInt(subColIndex));
-                    item.setBackgroundColor(COLOR_RED);
+                    tvMoney.setText(getString(R.string.v_sub) + ": " + c.getInt(subColIndex));
+                            item.setBackgroundColor(COLOR_RED);
+                    moneyItem = "" + c.getInt(subColIndex);
                 }
                 TextView tvCategory = (TextView) item.findViewById(R.id.tvCategory);
-                tvCategory.setText("Категория: " + c.getString(categoryColIndex));
+                tvCategory.setText(getString(R.string.v_category)+": " + c.getString(categoryColIndex));
+                TextView tvId = (TextView) item.findViewById(R.id.tvId);
+                tvId.setText(c.getString(dateColId));
                 item.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
                 linLayout.addView(item, 0);
+                item.setOnClickListener(new OnClickListener() {
+                    public void onClick(View v) {
+//                        TextView textMoney = (TextView) v.findViewById(R.id.tvMoney);
+//                        TextView textCategory = (TextView) v.findViewById(R.id.tvCategory);
+
+                        TextView tvId = (TextView) v.findViewById(R.id.tvId);
+                        Intent intentContext = new Intent(MainActivity.this, ContextMenuActivity.class);
+                        intentContext.putExtra("idItem", "" + tvId.getText());
+
+//                        intentContext.putExtra("moneyItem", "" + textMoney.getText().toString().split(" ")[1]);
+//                        intentContext.putExtra("categoryItem", "" + textCategory.getText().toString().split(" ")[1]);
+//                        intentContext.putExtra("typeItem", "" + textMoney.getText().toString().split(" ")[0]
+//                                .substring(0, textMoney.getText().toString().split(" ")[0].length()-2));
+
+                        startActivity(intentContext);
+                    }
+                });
             } while (c.moveToNext());
         } else
             Log.d(LOG_TAG, "0 rows");
@@ -133,16 +155,8 @@ public class MainActivity extends Activity implements OnClickListener {
 
 //TODO понять в каком месте правильно будет закрывать подключение
 //        db.close();
-        tvSum.setText(getBalance());
+
+        tvSum.setText(db.getBalance());
         flagHide = true;
     }
-
-    public String getBalance() {
-        String sqlQuerySum1 = "SELECT SUM(_add) FROM mytable5";
-        String sqlQuerySum2 = "SELECT SUM(_sub) FROM mytable5";
-        Cursor cursor1 = db.getSelect(sqlQuerySum1);
-        Cursor cursor2 = db.getSelect(sqlQuerySum2);
-        return ""+(db.getSum(cursor1) - db.getSum(cursor2));
-    }
-
 }

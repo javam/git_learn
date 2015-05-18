@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">"Бюджет"</string>
-    <string name="v_money">"Сумма: "</string>
+    <string name="app_name">"Лёгкий бюджет"</string>
+    <string name="v_money">"Сумма"</string>
     <string name="v_category">"Категория"</string>
-    <string name="v_add">"Доход: "</string>
-    <string name="v_sub">"Расход: "</string>
+    <string name="v_add">"Доход"</string>
+    <string name="v_sub">"Расход"</string>
+    <string name="v_date">"Дата"</string>
     <string name="categoty_food">"Еда"</string>
     <string name="categoty_flat">"За квартиру"</string>
     <string name="categoty_transport">"Транспорт"</string>
@@ -15,5 +16,9 @@
     <string name="btn_input">"Добавить"</string>
     <string name="btn_showOrHide">"Отобразить/Спрятать"</string>
     <string name="btn_clear">"Очистить"</string>
+    <string name="btn_context_edit">"Редактировать"</string>
+    <string name="btn_context_copy">"Копировать"</string>
+    <string name="btn_context_delete">"Удалить"</string>
     <string name="action_settings">Настройки</string>
+    <string name="edit_btn">Изменить</string>
 </resources>

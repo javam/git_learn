@@ -5,82 +5,125 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="20dp"
-        android:gravity="center_horizontal">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Баланс:  "
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TextView
-            android:id="@+id/sumView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text=""
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
+        android:layout_height="75dp"
+        android:background="#e64708">
 
-        <Button
-            android:id="@+id/btnAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="+" />
-        <Button
-            android:id="@+id/btnSub"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="-" />
-    </LinearLayout>
+        <FrameLayout
+            android:layout_width="75dp"
+            android:layout_height="75dp"></FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="20dp"
-        android:gravity="center_horizontal">
-
-        <Button
-            android:id="@+id/btnShow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_showOrHide" />
-        <Button
-            android:id="@+id/btnClear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_clear" />
-    </LinearLayout>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
-        android:id="@+id/scroll">
-        <LinearLayout
-            android:id="@+id/linLayout"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-        </LinearLayout>
-    </ScrollView>
+            android:layout_height="match_parent">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:id="@+id/textView"
+                android:layout_gravity="center"
+                android:textSize="25sp" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="75dp"
+            android:layout_height="match_parent"
+            android:background="#373737"></LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="20dp"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/sumView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text=""
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="25sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnAdd"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:text="+"
+                android:background="#08A7E6"
+                android:layout_marginRight="75dp"
+                android:textSize="25sp" />
+            <Button
+                android:id="@+id/btnSub"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:text="-"
+                android:background="#e60838"
+                android:textSize="25sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="20dp"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/btnShow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_showOrHide" />
+            <Button
+                android:id="@+id/btnClear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_clear" />
+        </LinearLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/scroll">
+            <LinearLayout
+                android:id="@+id/linLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            </LinearLayout>
+        </ScrollView>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

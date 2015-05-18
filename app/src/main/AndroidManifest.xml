@@ -21,6 +21,10 @@
             android:name=".InputActivity"
             android:theme="@style/Theme.Transparent">
         </activity>
+        <activity
+            android:name=".ContextMenuActivity"
+            android:theme="@style/Theme.Transparent">
+        </activity>
     </application>
 
 </manifest>

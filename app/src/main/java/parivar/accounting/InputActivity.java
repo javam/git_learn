@@ -24,7 +24,7 @@ public class InputActivity extends Activity implements View.OnClickListener {
     Spinner spinner;
     Button btnInput;
 
-    String category;
+    String category, categoryItem, moneyItem, typeItem, idItem, editItem;
     String[] dataSpinner;
 
     boolean typeInputBool;
@@ -44,11 +44,38 @@ public class InputActivity extends Activity implements View.OnClickListener {
 
         btnInput = (Button) findViewById(R.id.btnInput);
         btnInput.setOnClickListener(this);
-
+//TODO переписать на передачу одного параметра интенту
         Intent intent = getIntent();
         tvHeadInput.setText(intent.getStringExtra("typeInput"));
-        typeInputBool = Boolean.parseBoolean(intent.getStringExtra("typeInputBool"));
-        makeSpinner();
+        moneyItem = intent.getStringExtra("moneyItem");
+        categoryItem = intent.getStringExtra("categoryItem");
+        typeItem = intent.getStringExtra("typeItem");
+        idItem =  intent.getStringExtra("idItem");
+        editItem =  intent.getStringExtra("editItem");
+
+        if(moneyItem!=null) {
+            etMoney.setText(moneyItem);
+        }
+
+        if (editItem != null) {
+            btnInput.setText(getString(R.string.edit_btn));
+        }
+
+        if (categoryItem != null){
+            makeSpinner(categoryItem);
+        }
+        else {
+            makeSpinner("0");
+        }
+
+        if(typeItem!=null&&typeItem.equals("1")){
+            typeInputBool = true;
+        } else if(typeItem!=null&&typeItem.equals("0")){
+            typeInputBool = false;
+        }
+        else {
+            typeInputBool = Boolean.parseBoolean(intent.getStringExtra("typeInputBool"));
+        }
     }
 
 
@@ -59,43 +86,42 @@ public class InputActivity extends Activity implements View.OnClickListener {
                 db = new DB(this);
                 db.open();
                 if (returnMoney() == 0) break;
-                Log.d(LOG_TAG, "--- Insert in mytable: ---");
+
+                if (editItem != null && typeInputBool) {
+                    db.updateValue(idItem, "" + returnMoney(), "0", " \" " + category + " \" ");
+                } else if (editItem != null && !typeInputBool){
+                    db.updateValue(idItem, "0", "" + returnMoney(), " \" " + category + " \" ");
+                } else
+
                 if(typeInputBool) {
                     db.addRec(returnDate(), returnMoney(), 0, category);
                 }
                 else {
                     db.addRec(returnDate(), 0, returnMoney(), category);
                 }
-                hideKeyboard();
-                spinner.setSelection(0);
+                spinner.setSelection(0); //TODO попробовать убрать ???
                 db.close();
+                hideKeyboard();
                 finish();
                 break;
         }
     }
 
-
-    public void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-    }
-
     public String returnDate() {
         // получаем данные из полей ввода
         Date d = new Date();
-        SimpleDateFormat fromUser = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+        SimpleDateFormat fromUser = new SimpleDateFormat("HH:mm:ss dd.MM.yyyy");
         return (fromUser.format(d)).toString();
     }
 //TODO обработать другие случаи с неправильным вводом, заблокировать кнопку ввода
     public int returnMoney() {
         int money;
         if (etMoney.getText().toString().trim().isEmpty()) money = 0;
-        else money = Integer.parseInt(etMoney.getText().toString());
+        else money = (int) Float.parseFloat(etMoney.getText().toString());
         return money;
     }
 
-    private void makeSpinner() {
-
+    private void makeSpinner(String copyPos) {
         // localisation
         dataSpinner = new String[6];
         dataSpinner[0] = getString(R.string.categoty_whithout);
@@ -112,7 +138,18 @@ public class InputActivity extends Activity implements View.OnClickListener {
         // заголовок
         spinner.setPrompt(getString(R.string.v_category));
         // выделяем элемент
-        spinner.setSelection(0);
+        if(copyPos!="0"){
+            for (int i = 0; i < dataSpinner.length; i++) {
+                if (copyPos.equals(dataSpinner[i])) {
+                    spinner.setSelection(i);
+                    break;
+                }
+            }
+
+        }
+        else {
+            spinner.setSelection(0);
+        }
         // устанавливаем обработчик нажатия
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -144,4 +181,8 @@ public class InputActivity extends Activity implements View.OnClickListener {
             }
         });
     }
+        public void hideKeyboard() {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
 }
