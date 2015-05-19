@@ -47,8 +47,6 @@ public class ContextMenuActivity extends Activity implements View.OnClickListene
         }
 
         categotyItem = db.getCategoryById(idItem);
-
-//        Log.v(LOG_TAG, "getCategoryById = " + categotyItem);
     }
 
     @Override
@@ -64,9 +62,6 @@ public class ContextMenuActivity extends Activity implements View.OnClickListene
                 editIntent.putExtra("categoryItem", categotyItem);
                 editIntent.putExtra("typeItem", typeItem);
                 startActivity(editIntent);
-
-
-
 
                 finish();
                 break;

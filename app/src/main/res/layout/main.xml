@@ -12,7 +12,16 @@
 
         <FrameLayout
             android:layout_width="75dp"
-            android:layout_height="75dp"></FrameLayout>
+            android:layout_height="75dp">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/menu_btn"
+                android:id="@+id/btnMenu"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent" />
+        </FrameLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -38,7 +47,28 @@
             android:orientation="vertical"
             android:layout_width="75dp"
             android:layout_height="match_parent"
-            android:background="#373737"></LinearLayout>
+            android:id="@+id/layoutMenu"
+            android:background="#373737"
+            android:visibility="visible">
+
+            <Button
+                android:id="@+id/btnShow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_showOrHide" />
+
+            <Button
+                android:id="@+id/btnClear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_clear" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Список категорий"
+                android:id="@+id/btnCategory" />
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
@@ -69,7 +99,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
 
             <Button
                 android:id="@+id/btnAdd"
@@ -88,26 +119,7 @@
                 android:textSize="25sp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linearLayout5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="20dp"
-            android:gravity="center_horizontal">
-
-            <Button
-                android:id="@+id/btnShow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_showOrHide" />
-            <Button
-                android:id="@+id/btnClear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_clear" />
-        </LinearLayout>
-        <ScrollView
+            <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"

@@ -22,9 +22,9 @@ public class MainActivity extends Activity implements OnClickListener {
     final int COLOR_RED = Color.parseColor("#559966CC");
     final String LOG_TAG = "myLogs";
 
-    Button btnAdd, btnSub, btnShow, btnClear;
+    Button btnAdd, btnSub, btnShow, btnClear, btnMenu, btnCategory;
     TextView tvSum;
-    LinearLayout linLayout;
+    LinearLayout linLayout, layoutMenu;
 
     boolean flagHide;
     String idItem, moneyItem, categotyItem;
@@ -48,9 +48,18 @@ public class MainActivity extends Activity implements OnClickListener {
         btnClear = (Button) findViewById(R.id.btnClear);
         btnClear.setOnClickListener(this);
 
+        Button btnMenu = (Button) findViewById(R.id.btnMenu);
+        btnMenu.setOnClickListener(this);
+
+        Button btnCategory = (Button) findViewById(R.id.btnCategory);
+        btnCategory.setOnClickListener(this);
+
+
         tvSum = (TextView) findViewById(R.id.sumView);
 
         linLayout = (LinearLayout) findViewById(R.id.linLayout);
+        layoutMenu = (LinearLayout) findViewById(R.id.layoutMenu);
+
 
         db = new DB(this);
         db.open();
@@ -93,6 +102,20 @@ public class MainActivity extends Activity implements OnClickListener {
                     flagHide = false;
                 }
                 break;
+            case R.id.btnMenu:
+                LinearLayout.LayoutParams layoutMenuParams=(LinearLayout.LayoutParams) layoutMenu.getLayoutParams();
+
+                if (layoutMenuParams.width != 0) {
+                    layoutMenuParams.width = 0;
+                } else {
+                    layoutMenuParams.width = (int) getResources().getDimension(R.dimen.menu_size);
+                }
+                layoutMenu.setLayoutParams(layoutMenuParams);
+                break;
+            case R.id.btnCategory:
+                Intent categoryIntent = new Intent(this, CategoryActivity.class);
+                startActivity(categoryIntent);
+                break;
         }
     }
 
@@ -133,18 +156,9 @@ public class MainActivity extends Activity implements OnClickListener {
                 linLayout.addView(item, 0);
                 item.setOnClickListener(new OnClickListener() {
                     public void onClick(View v) {
-//                        TextView textMoney = (TextView) v.findViewById(R.id.tvMoney);
-//                        TextView textCategory = (TextView) v.findViewById(R.id.tvCategory);
-
                         TextView tvId = (TextView) v.findViewById(R.id.tvId);
                         Intent intentContext = new Intent(MainActivity.this, ContextMenuActivity.class);
                         intentContext.putExtra("idItem", "" + tvId.getText());
-
-//                        intentContext.putExtra("moneyItem", "" + textMoney.getText().toString().split(" ")[1]);
-//                        intentContext.putExtra("categoryItem", "" + textCategory.getText().toString().split(" ")[1]);
-//                        intentContext.putExtra("typeItem", "" + textMoney.getText().toString().split(" ")[0]
-//                                .substring(0, textMoney.getText().toString().split(" ")[0].length()-2));
-
                         startActivity(intentContext);
                     }
                 });

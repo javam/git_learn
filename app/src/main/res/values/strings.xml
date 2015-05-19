@@ -21,4 +21,6 @@
     <string name="btn_context_delete">"Удалить"</string>
     <string name="action_settings">Настройки</string>
     <string name="edit_btn">Изменить</string>
+    <string name="menu_btn">меню</string>
+    <string name="add_category">Добавить категорию</string>
 </resources>
