@@ -26,7 +26,7 @@ import java.util.Map;
 
 public class InputActivity extends Activity implements View.OnClickListener {
 
-    TextView tvHeadInput;
+    TextView tvHeadInput, tvEnterCategory;
     EditText etMoney;
     Spinner spinner;
     Button btnInput;
@@ -47,6 +47,7 @@ public class InputActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.input_money);
 
         tvHeadInput = (TextView) findViewById(R.id.tvHeadInput);
+        tvEnterCategory = (TextView) findViewById(R.id.tvEnterCategory);
         etMoney = (EditText) findViewById(R.id.etMoney);
         spinner = (Spinner) findViewById(R.id.spinner);
 
@@ -147,6 +148,11 @@ public class InputActivity extends Activity implements View.OnClickListener {
         c.close();
 
         final List<String> categoryList = new ArrayList<>(categoryMapCollection.values());
+
+        if (categoryList.isEmpty()) {
+            spinner.setVisibility(View.INVISIBLE);
+            tvEnterCategory.setVisibility(View.INVISIBLE);
+        }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoryList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

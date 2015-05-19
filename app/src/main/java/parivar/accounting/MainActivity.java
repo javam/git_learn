@@ -22,9 +22,9 @@ public class MainActivity extends Activity implements OnClickListener {
     final int COLOR_RED = Color.parseColor("#559966CC");
     final String LOG_TAG = "myLogs";
 
-    Button btnAdd, btnSub, btnShow, btnClear, btnMenu, btnCategory;
+    Button btnAdd, btnSub, btnShow, btnClear, btnMenu, btnCategory, btnMain;
     TextView tvSum;
-    LinearLayout linLayout, layoutMenu;
+    LinearLayout linLayout, layoutMenu, mainLayout;
 
     boolean flagHide;
     String idItem, moneyItem, categotyItem;
@@ -54,11 +54,15 @@ public class MainActivity extends Activity implements OnClickListener {
         Button btnCategory = (Button) findViewById(R.id.btnCategory);
         btnCategory.setOnClickListener(this);
 
+        Button btnMain = (Button) findViewById(R.id.btnMain);
+        btnMain.setOnClickListener(this);
+
 
         tvSum = (TextView) findViewById(R.id.sumView);
 
         linLayout = (LinearLayout) findViewById(R.id.linLayout);
         layoutMenu = (LinearLayout) findViewById(R.id.layoutMenu);
+        mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
 
 
         db = new DB(this);
@@ -103,7 +107,7 @@ public class MainActivity extends Activity implements OnClickListener {
                 }
                 break;
             case R.id.btnMenu:
-                LinearLayout.LayoutParams layoutMenuParams=(LinearLayout.LayoutParams) layoutMenu.getLayoutParams();
+                LinearLayout.LayoutParams layoutMenuParams = (LinearLayout.LayoutParams) layoutMenu.getLayoutParams();
 
                 if (layoutMenuParams.width != 0) {
                     layoutMenuParams.width = 0;
@@ -113,10 +117,19 @@ public class MainActivity extends Activity implements OnClickListener {
                 layoutMenu.setLayoutParams(layoutMenuParams);
                 break;
             case R.id.btnCategory:
+//                mainLayout.removeAllViews();
+//                LayoutInflater ltInflater = getLayoutInflater();
+//                final View item = ltInflater.inflate(R.layout.category_list_edit, mainLayout, false);
+//                mainLayout.addView(item);
                 Intent categoryIntent = new Intent(this, CategoryActivity.class);
                 startActivity(categoryIntent);
                 break;
+            case R.id.btnMain:
+//                mainLayout.removeAllViews();
+//                readValues();
+                break;
         }
+
     }
 
     public void readValues() {
@@ -139,17 +152,17 @@ public class MainActivity extends Activity implements OnClickListener {
                 tvDate.setText(getString(R.string.v_date) + ": " + c.getString(dateColIndex));
                 if (c.getInt(addColIndex) != 0) {
                     TextView tvMoney = (TextView) item.findViewById(R.id.tvMoney);
-                    tvMoney.setText(getString(R.string.v_add)+ ": " + c.getInt(addColIndex));
+                    tvMoney.setText(getString(R.string.v_add) + ": " + c.getInt(addColIndex));
                     item.setBackgroundColor(COLOR_GREEN);
                     moneyItem = "" + c.getInt(addColIndex);
                 } else {
                     TextView tvMoney = (TextView) item.findViewById(R.id.tvMoney);
                     tvMoney.setText(getString(R.string.v_sub) + ": " + c.getInt(subColIndex));
-                            item.setBackgroundColor(COLOR_RED);
+                    item.setBackgroundColor(COLOR_RED);
                     moneyItem = "" + c.getInt(subColIndex);
                 }
                 TextView tvCategory = (TextView) item.findViewById(R.id.tvCategory);
-                tvCategory.setText(getString(R.string.v_category)+": " + c.getString(categoryColIndex));
+                tvCategory.setText(getString(R.string.v_category) + ": " + c.getString(categoryColIndex));
                 TextView tvId = (TextView) item.findViewById(R.id.tvId);
                 tvId.setText(c.getString(dateColId));
                 item.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;

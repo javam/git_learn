@@ -45,26 +45,32 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="75dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/layoutMenu"
             android:background="#373737"
             android:visibility="visible">
 
             <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btnMain"
+                android:id="@+id/btnMain" />
+
+            <Button
                 android:id="@+id/btnShow"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_showOrHide" />
 
             <Button
                 android:id="@+id/btnClear"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_clear" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Список категорий"
                 android:id="@+id/btnCategory" />
@@ -73,7 +79,8 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/mainLayout">
 
             <LinearLayout
             android:id="@+id/linearLayout4"
