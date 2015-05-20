@@ -13,8 +13,8 @@ public class DB {
 
     private static final String DB_NAME = "mydb1";
     private static final int DB_VERSION = 1;
-    private static final String DB_TABLE = "mytable5";
-    private static final String DB_TABLE_CATEGORY = "category_table";
+    public static final String DB_TABLE = "mytable5";
+    public static final String DB_TABLE_CATEGORY = "category_table";
 
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_DATA = "_data";
@@ -23,7 +23,7 @@ public class DB {
     public static final String COLUMN_CATEGORY = "category";
 
     public static final String COLUMN_CATEGORY_LIST = "category_list";
-    public static final String COLUMN_CATEGORY_ID = "category_id";
+//    public static final String COLUMN_CATEGORY_ID = "category_id";
 
     private static final String DB_CREATE =
             "create table " + DB_TABLE + "(" +
@@ -36,7 +36,7 @@ public class DB {
 
     private static final String DB_CREATE_CATEGORY =
             "create table " + DB_TABLE_CATEGORY + "(" +
-                    COLUMN_CATEGORY_ID + " integer primary key autoincrement, " +
+                    COLUMN_ID + " integer primary key autoincrement, " +
                     COLUMN_CATEGORY_LIST + " text" +
                     ");";
 
@@ -85,8 +85,8 @@ public class DB {
     }
 
     // удалить запись из DB_TABLE
-    public void delRec(long id) {
-        mDB.delete(DB_TABLE, COLUMN_ID + " = " + id, null);   }
+    public void delRec(int id, String tableName) {
+        mDB.delete(tableName, COLUMN_ID + " = " + id, null);   }
 
     // del all of DB_TABLE
         public int delAllRec() {
@@ -156,10 +156,6 @@ public class DB {
         mDB.insert(DB_TABLE_CATEGORY, null, cv);
     }
 
-    public void delCategoryItem(String id) {
-        mDB.delete(DB_TABLE_CATEGORY, COLUMN_CATEGORY_ID + " = " + id, null);   }
-
-
 //TODO в запросах везде прописать переменные d sqlQuery
 
     // класс по созданию и управлению БД
@@ -179,6 +175,7 @@ public class DB {
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+            //TODO сделать обновление базы
         }
     }
 }

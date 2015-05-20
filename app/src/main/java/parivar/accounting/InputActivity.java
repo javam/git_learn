@@ -6,9 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -61,6 +59,7 @@ public class InputActivity extends Activity implements View.OnClickListener {
         typeItem = intent.getStringExtra("typeItem");
         idItem = intent.getStringExtra("idItem");
         editItem = intent.getStringExtra("editItem");
+
 
         if (moneyItem != null) {
             etMoney.setText(moneyItem);
@@ -118,19 +117,14 @@ public class InputActivity extends Activity implements View.OnClickListener {
         return (fromUser.format(d)).toString();
     }
 
-    //TODO обработать другие случаи с неправильным вводом, заблокировать кнопку ввода
     public int returnMoney() {
-        int money;
-        if (etMoney.getText().toString().trim().isEmpty()) money = 0;
-        else money = (int) Float.parseFloat(etMoney.getText().toString());
-        return money;
+        if (etMoney.getText().toString().trim().isEmpty()) return 0;
+        else return (int) Float.parseFloat(etMoney.getText().toString());
     }
 
     private void makeSpinner(String copyPos) {
         db = new DB(this);
         db.open();
-        //read from db to collection
-        Log.d(LOG_TAG, "make spinner");
 
         final Map<Integer, String> categoryMapCollection = new HashMap();
 

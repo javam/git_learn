@@ -8,7 +8,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:background="#e64708">
+        android:background="@color/head">
 
         <FrameLayout
             android:layout_width="75dp"
@@ -45,10 +45,10 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="0dp"
+            android:layout_width="120dp"
             android:layout_height="match_parent"
             android:id="@+id/layoutMenu"
-            android:background="#373737"
+            android:background="@color/menu"
             android:visibility="visible">
 
             <Button
@@ -114,7 +114,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:text="+"
-                android:background="#08A7E6"
+                android:background="@color/btn_add"
                 android:layout_marginRight="75dp"
                 android:textSize="25sp" />
             <Button
@@ -122,7 +122,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:text="-"
-                android:background="#e60838"
+                android:background="@color/btn_sub"
                 android:textSize="25sp" />
         </LinearLayout>
 

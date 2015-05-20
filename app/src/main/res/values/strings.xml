@@ -19,6 +19,7 @@
     <string name="btn_context_edit">"Редактировать"</string>
     <string name="btn_context_copy">"Копировать"</string>
     <string name="btn_context_delete">"Удалить"</string>
+    <string name="btn_context_back">"Назад"</string>
     <string name="action_settings">Настройки</string>
     <string name="edit_btn">Изменить</string>
     <string name="menu_btn">меню</string>

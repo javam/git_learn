@@ -3,7 +3,6 @@ package parivar.accounting;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,12 +13,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 public class MainActivity extends Activity implements OnClickListener {
 
-    final int COLOR_GREEN = Color.parseColor("#55336699");
-    final int COLOR_RED = Color.parseColor("#559966CC");
     final String LOG_TAG = "myLogs";
 
     Button btnAdd, btnSub, btnShow, btnClear, btnMenu, btnCategory, btnMain;
@@ -27,7 +22,7 @@ public class MainActivity extends Activity implements OnClickListener {
     LinearLayout linLayout, layoutMenu, mainLayout;
 
     boolean flagHide;
-    String idItem, moneyItem, categotyItem;
+    String moneyItem;
 
     DB db;
 
@@ -48,25 +43,20 @@ public class MainActivity extends Activity implements OnClickListener {
         btnClear = (Button) findViewById(R.id.btnClear);
         btnClear.setOnClickListener(this);
 
-        Button btnMenu = (Button) findViewById(R.id.btnMenu);
+        btnMenu = (Button) findViewById(R.id.btnMenu);
         btnMenu.setOnClickListener(this);
 
-        Button btnCategory = (Button) findViewById(R.id.btnCategory);
+        btnCategory = (Button) findViewById(R.id.btnCategory);
         btnCategory.setOnClickListener(this);
 
-        Button btnMain = (Button) findViewById(R.id.btnMain);
+        btnMain = (Button) findViewById(R.id.btnMain);
         btnMain.setOnClickListener(this);
-
 
         tvSum = (TextView) findViewById(R.id.sumView);
 
         linLayout = (LinearLayout) findViewById(R.id.linLayout);
         layoutMenu = (LinearLayout) findViewById(R.id.layoutMenu);
         mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
-
-
-        db = new DB(this);
-        db.open();
 
         readValues();
     }
@@ -134,8 +124,11 @@ public class MainActivity extends Activity implements OnClickListener {
 
     public void readValues() {
         Log.d(LOG_TAG, "--- Rows in mytable: ---");
+
+        db = new DB(this);
+        db.open();
+
         linLayout.removeAllViews();
-        // делаем запрос всех данных из таблицы mytable, получаем Cursor
         Cursor c = db.getAllData();
         if (c.moveToFirst()) {
             int dateColId = c.getColumnIndex(db.COLUMN_ID);
@@ -149,21 +142,21 @@ public class MainActivity extends Activity implements OnClickListener {
             do {
                 final View item = ltInflater.inflate(R.layout.item, linLayout, false);
                 TextView tvDate = (TextView) item.findViewById(R.id.tvDate);
+                TextView tvMoney = (TextView) item.findViewById(R.id.tvMoney);
+                TextView tvCategory = (TextView) item.findViewById(R.id.tvCategory);
+                TextView tvId = (TextView) item.findViewById(R.id.tvId);
+
                 tvDate.setText(getString(R.string.v_date) + ": " + c.getString(dateColIndex));
                 if (c.getInt(addColIndex) != 0) {
-                    TextView tvMoney = (TextView) item.findViewById(R.id.tvMoney);
                     tvMoney.setText(getString(R.string.v_add) + ": " + c.getInt(addColIndex));
-                    item.setBackgroundColor(COLOR_GREEN);
+                    item.setBackgroundColor(getResources().getColor(R.color.add));
                     moneyItem = "" + c.getInt(addColIndex);
                 } else {
-                    TextView tvMoney = (TextView) item.findViewById(R.id.tvMoney);
                     tvMoney.setText(getString(R.string.v_sub) + ": " + c.getInt(subColIndex));
-                    item.setBackgroundColor(COLOR_RED);
+                    item.setBackgroundColor(getResources().getColor(R.color.sub));
                     moneyItem = "" + c.getInt(subColIndex);
                 }
-                TextView tvCategory = (TextView) item.findViewById(R.id.tvCategory);
                 tvCategory.setText(getString(R.string.v_category) + ": " + c.getString(categoryColIndex));
-                TextView tvId = (TextView) item.findViewById(R.id.tvId);
                 tvId.setText(c.getString(dateColId));
                 item.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
                 linLayout.addView(item, 0);
@@ -180,10 +173,10 @@ public class MainActivity extends Activity implements OnClickListener {
             Log.d(LOG_TAG, "0 rows");
         c.close();
 
-//TODO понять в каком месте правильно будет закрывать подключение
-//        db.close();
-
         tvSum.setText(db.getBalance());
+
+        db.close();
+
         flagHide = true;
     }
 }

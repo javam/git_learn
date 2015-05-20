@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class ContextMenuActivity extends Activity implements View.OnClickListener {
 
-    Button btnEdit, btnCopy, btnDel;
+    Button btnEdit, btnCopy, btnDel, btnBack;
 
     String idItem, moneyItem, categotyItem, typeItem;
 
@@ -31,6 +31,9 @@ public class ContextMenuActivity extends Activity implements View.OnClickListene
         btnDel = (Button) findViewById(R.id.btnDel);
         btnDel.setOnClickListener(this);
 
+        btnBack = (Button) findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(this);
+
         db = new DB(this);
         db.open();
 
@@ -47,6 +50,12 @@ public class ContextMenuActivity extends Activity implements View.OnClickListene
         }
 
         categotyItem = db.getCategoryById(idItem);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        db.close();
     }
 
     @Override
@@ -77,8 +86,10 @@ public class ContextMenuActivity extends Activity implements View.OnClickListene
                 finish();
                 break;
             case R.id.btnDel:
-                db.delRec(Integer.parseInt(idItem));
-                db.close();
+                db.delRec(Integer.parseInt(idItem), db.DB_TABLE);
+                finish();
+                break;
+            case R.id.btnBack:
                 finish();
                 break;
         }

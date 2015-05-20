@@ -34,6 +34,7 @@ public class CategoryActivity extends Activity implements View.OnClickListener {
     Context context;
 
     String idOfCategory;
+    int idCategoty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class CategoryActivity extends Activity implements View.OnClickListener {
         // делаем запрос всех данных из таблицы mytable, получаем Cursor
         Cursor c = db.getAllDataCategory();
         if (c.moveToFirst()) {
-            int ColId = c.getColumnIndex(db.COLUMN_CATEGORY_ID);
+            int ColId = c.getColumnIndex(db.COLUMN_ID);
             int ColCategory = c.getColumnIndex(db.COLUMN_CATEGORY_LIST);
 
             LayoutInflater ltInflater = getLayoutInflater();
@@ -79,7 +80,7 @@ public class CategoryActivity extends Activity implements View.OnClickListener {
                 item.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         TextView tvCategoryId = (TextView) v.findViewById(R.id.tvCategoryId);
-                        idOfCategory = tvCategoryId.getText().toString();
+                        idCategoty = Integer.parseInt(tvCategoryId.getText().toString());
                         ad.show();
                     }
                 });
@@ -128,7 +129,7 @@ public class CategoryActivity extends Activity implements View.OnClickListener {
         ad.setMessage(message); // сообщение
         ad.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
-                db.delCategoryItem(idOfCategory);
+                db.delRec(idCategoty, db.DB_TABLE_CATEGORY);
                 readCategories();
             }
         });
