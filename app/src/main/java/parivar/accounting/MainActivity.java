@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class MainActivity extends Activity implements OnClickListener {
@@ -19,7 +20,8 @@ public class MainActivity extends Activity implements OnClickListener {
 
     Button btnAdd, btnSub, btnShow, btnClear, btnMenu, btnCategory, btnMain;
     TextView tvSum;
-    LinearLayout linLayout, layoutMenu, mainLayout;
+    LinearLayout linLayout, layoutMenu;
+    RelativeLayout mainLayout;
 
     boolean flagHide;
     String moneyItem;
@@ -56,7 +58,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
         linLayout = (LinearLayout) findViewById(R.id.linLayout);
         layoutMenu = (LinearLayout) findViewById(R.id.layoutMenu);
-        mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
+        mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
 
         readValues();
     }
@@ -97,7 +99,7 @@ public class MainActivity extends Activity implements OnClickListener {
                 }
                 break;
             case R.id.btnMenu:
-                LinearLayout.LayoutParams layoutMenuParams = (LinearLayout.LayoutParams) layoutMenu.getLayoutParams();
+                RelativeLayout.LayoutParams layoutMenuParams = (RelativeLayout.LayoutParams) layoutMenu.getLayoutParams();
 
                 if (layoutMenuParams.width != 0) {
                     layoutMenuParams.width = 0;
