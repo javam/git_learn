@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-import android.widget.Toast;
 
 public class DB {
 
@@ -175,7 +173,9 @@ public class DB {
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            //TODO сделать обновление базы
+            //TODO оттестить
+            db.execSQL("DROP TABLE IF EXISTS "+ DB_NAME);
+            onCreate(db);
         }
     }
 }

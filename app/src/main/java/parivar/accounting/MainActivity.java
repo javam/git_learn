@@ -18,7 +18,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
     final String LOG_TAG = "myLogs";
 
-    Button btnAdd, btnSub, btnShow, btnClear, btnMenu, btnCategory, btnMain;
+    Button btnAdd, btnSub, btnShow, btnClear, btnMenu, btnCategory, btnMain, btnRealBalance;
     TextView tvSum;
     LinearLayout linLayout, layoutMenu;
     RelativeLayout mainLayout;
@@ -53,6 +53,9 @@ public class MainActivity extends Activity implements OnClickListener {
 
         btnMain = (Button) findViewById(R.id.btnMain);
         btnMain.setOnClickListener(this);
+
+        btnRealBalance = (Button) findViewById(R.id.btnRealBalance);
+        btnRealBalance.setOnClickListener(this);
 
         tvSum = (TextView) findViewById(R.id.sumView);
 
@@ -120,6 +123,10 @@ public class MainActivity extends Activity implements OnClickListener {
 //                mainLayout.removeAllViews();
 //                readValues();
                 break;
+            case R.id.btnRealBalance:
+                Intent intentRealBalance = new Intent(this, InputBalance.class);
+                startActivity(intentRealBalance);
+
         }
 
     }

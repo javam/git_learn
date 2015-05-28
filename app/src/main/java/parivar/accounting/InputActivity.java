@@ -51,7 +51,7 @@ public class InputActivity extends Activity implements View.OnClickListener {
 
         btnInput = (Button) findViewById(R.id.btnInput);
         btnInput.setOnClickListener(this);
-//TODO переписать на передачу одного параметра интенту
+//TODO РїРµСЂРµРїРёСЃР°С‚СЊ РЅР° РїРµСЂРµРґР°С‡Сѓ РѕРґРЅРѕРіРѕ РїР°СЂР°РјРµС‚СЂР° РёРЅС‚РµРЅС‚Сѓ
         Intent intent = getIntent();
         tvHeadInput.setText(intent.getStringExtra("typeInput"));
         moneyItem = intent.getStringExtra("moneyItem");
@@ -102,7 +102,7 @@ public class InputActivity extends Activity implements View.OnClickListener {
                 } else {
                     db.addRec(returnDate(), 0, returnMoney(), category);
                 }
-                spinner.setSelection(0); //TODO попробовать убрать ???
+                spinner.setSelection(0); //TODO РїРѕРїСЂРѕР±РѕРІР°С‚СЊ СѓР±СЂР°С‚СЊ ???
                 db.close();
                 hideKeyboard();
                 finish();
@@ -111,7 +111,7 @@ public class InputActivity extends Activity implements View.OnClickListener {
     }
 
     public String returnDate() {
-        // получаем данные из полей ввода
+        // РїРѕР»СѓС‡Р°РµРј РґР°РЅРЅС‹Рµ РёР· РїРѕР»РµР№ РІРІРѕРґР°
         Date d = new Date();
         SimpleDateFormat fromUser = new SimpleDateFormat("dd.MM.yyyy");
         return (fromUser.format(d)).toString();
@@ -119,7 +119,7 @@ public class InputActivity extends Activity implements View.OnClickListener {
 
     public int returnMoney() {
         if (etMoney.getText().toString().trim().isEmpty()) return 0;
-        else return (int) Float.parseFloat(etMoney.getText().toString());
+        else return Integer.parseInt(etMoney.getText().toString());
     }
 
     private void makeSpinner(String copyPos) {
@@ -152,9 +152,9 @@ public class InputActivity extends Activity implements View.OnClickListener {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
-        // заголовок
+        // Р·Р°РіРѕР»РѕРІРѕРє
         spinner.setPrompt(getString(R.string.v_category));
-        // выделяем элемент
+        // РІС‹РґРµР»СЏРµРј СЌР»РµРјРµРЅС‚
         if (!copyPos.equals("0")) {
             Log.v(LOG_TAG, "if (!copyPos.equals(\"0\")) {");
             for (Map.Entry<Integer, String> entry : categoryMapCollection.entrySet()) {
@@ -168,7 +168,7 @@ public class InputActivity extends Activity implements View.OnClickListener {
             Log.v(LOG_TAG, "tutu");
         }
 
-        // устанавливаем обработчик нажатия
+        // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РѕР±СЂР°Р±РѕС‚С‡РёРє РЅР°Р¶Р°С‚РёСЏ
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

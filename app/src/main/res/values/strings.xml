@@ -25,4 +25,6 @@
     <string name="menu_btn">меню</string>
     <string name="add_category">Добавить категорию</string>
     <string name="btnMain">Главная</string>
+    <string name="btnRealBalance">Реальный баланс</string>
+    <string name="tvRealStateOfBalanse">Введите актуальное значение баланса</string>
 </resources>
