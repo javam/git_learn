@@ -29,8 +29,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="50dp"
-    android:background="#373737"
+    android:background="#1e1e1e"
     android:id="@+id/categoryEditLayoutBack"
     android:orientation="vertical">
 
